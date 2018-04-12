@@ -1,24 +1,15 @@
-jersey2-spring4-grizzly2
-========================
+# ASU CSE412 DBMS course project phase 3 template
 
-This repository shows an example of how to integrate Jersey 2.6, Spring 4.0.2, Spring transactions, and Grizzly 2.3.11.
 
-Motivation
-----------
-I have been working on a project developing a REST appliction using Jersey 2.6. We use an embedded Grizzly 
-as the "container" because it is simple and seems reasonably fast.
+This repository shows an example of how to integrate Jersey 2.6, Spring 4.0.2, and Grizzly 2.3.11, PostgreSQL JDBC.
 
-However, we wanted to use Spring transactions to implement transactions, and that turned out to be less than 
-obvious (in the sense that somebody else had prepared a nice example to use.). So I started reading various 
-blog posts, mailinglists, stackoverflow etc.
+I have updated the template a little bit to make it suitable for our project. To see the old template, please refer to "Forked from".
 
-I soon found [1,2,3,4] which did basically what I wanted, but with Jersey 1.17 or with Tomcat instead of Grizzly.
+#### Note: this template is only tested on Ubuntu 16.04 LTS. All terminal commands mentioned in the README is only tested on Ubuntu.
 
-By doing some more digging I discovered [6,7,8] which gave me the inspiration I needed.
+## DBMS setting
 
-The example
------------
-The example requires a Postgres SQL 9.1 database called `test` with a user called `testuser` and password `1234`.
+The example requires a PostgreSQL database (9.X or later) called `test` with a user called `testuser` and password `1234`.
 
 ```CREATE USER testuser WITH PASSWORD '1234';```
 
@@ -39,49 +30,90 @@ ALTER TABLE users
   OWNER TO testuser;
 ```
 
-Compile the code:
+## Required software
 
-  ```mvn clean compile```
+Apache Maven 3
 
-Create an Eclipse project:
+```
+sudo apt-get install maven
+```
 
-  `mvn eclipse:eclipse`
+JRE 1.7 or later
 
-The example can be executed by running the com.test.Start class.
-
-A server should be now be running on localhost:3388.
-
-
-The server can be exercised using the following curl command:
-
-  `curl -v =X GET http://localhost:3388/test`
-
-which should return a 200 and the string "test". It should also add an entry to the users table.
+```
+sudo apt-get install default-jre
+```
 
 
-The transactions can be tested using this command:
+## Start the server
 
-  `curl -v =X GET http://localhost:3388/`
+Run the server program with a embedded server
 
-Which should return a 500 internal error. It would try to create an entry in the users table and then throw an
-UnsupportedOperationException. Which will make the transaction roll back. There should be no effect on the database.
+### From an IDE
 
+Run **Start** class.
 
-About the project.
-------------------
-The code I present here is heavily inspired and founded on the great work done by others primarily [1,2,4]. 
-The code take outset in [4] and incoorporates [2] with additions of knowledge from [6]. The setup of Grizzly is 
-basically a merge of [2,4,7], where [7] provided the final clue.
+A server should be now be running on localhost:3388. DO NOT CLOSE YOUR IDE.
 
-I also integrated Tomcat connection pool and made a small adjustment to show that the transactions work. 
+### From a Linux terminal
 
-Other Resources
----------------
-- [1] https://github.com/amacoder/demo-restWS-spring-jersey-tomcat-mybatis/blob/master/pom.xml
-- [2] http://www.codingpedia.org/ama/restful-web-services-example-in-java-with-jersey-spring-and-mybatis/
-- [3] http://grizzly-nio.net/2013/08/grizzly-httpserver-spring-jersey-serve-static-content-from-a-folder-and-from-a-jar/
-- [4] https://github.com/oleksiys/samples/tree/master/jersey1-grizzly2-spring
-- [5] https://java.net/projects/grizzly/lists/users/archive/2013-01/message/0
-- [6] http://stackoverflow.com/questions/15769415/grizzly-and-servletcontainercontext
-- [7] http://alkalinezoo.blogspot.dk/2013/05/rest-testing-with-embedded-grizzly.html
-- [8] http://www.byteslounge.com/tutorials/spring-jdbc-transactions-example
+Package the code:
+```
+mvn clean install
+```
+
+Then run the executable jar:
+```
+java -jar target/mywebapp-1.0-SNAPSHOT.jar
+```
+
+A server should be now be running on localhost:3388. DO NOT CLOSE YOUR TERMINAL.
+
+### Optional: Turn the server program to a daemon program
+
+In terminal:
+
+```
+nohup java -jar target/mywebapp-1.0-SNAPSHOT.jar &
+```
+
+This will detach the server program from the terminal. 
+
+Kill the daemon server program:
+
+1. Find the PID
+```
+ps ax|grep mywebapp-1.0-SNAPSHOT
+```
+
+2. Kill the program
+```
+kill -9 THEPID
+```
+
+## Issue a HTTP request
+
+### Add a user
+
+Open your browser and enter the address in the addree box:
+```
+http://localhost:3388/adduser/jack
+```
+which should the string "added one user". Your PostgreSQL users table should also have a new user called "jack".
+
+### Get a user
+Open your browser and enter the address in the addree box:
+```
+http://localhost:3388/getuser/jack
+```
+which should return the users which have username "jack".
+
+### Get all users
+Open your browser and enter the address in the addree box:
+```
+http://localhost:3388/getuser/
+```
+which should return all users.
+
+## What's the next step?
+Use your own movide database. Use your own HTML and Javascript to send/receive the HTTP requests and draw charts.

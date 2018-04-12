@@ -1,4 +1,4 @@
-package com.test;
+package edu.asu.mywebapp;
 
 import java.io.IOException;
 
@@ -47,7 +47,7 @@ public class Start {
 				"com.sun.jersey.api.container.filter.LoggingFilter");
 
 		servletRegistration.setInitParameter("javax.ws.rs.Application",
-				"com.test.MyDemoApplication");
+				MywebappResourceRegistrator.class.getName());
 
 		servletRegistration.setInitParameter(
 				"com.sun.jersey.config.property.packages", "com.test");

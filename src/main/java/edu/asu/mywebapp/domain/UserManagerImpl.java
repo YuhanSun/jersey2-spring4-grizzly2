@@ -1,15 +1,14 @@
 /* Copyright 2013-2014 (c) Sepior Aps, all rights reserved. */
 
-package com.test.domain;
+package edu.asu.mywebapp.domain;
 
 import java.util.List;
 
+import edu.asu.mywebapp.domain.interfaces.UserManager;
+import edu.asu.mywebapp.storage.interfaces.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.test.domain.interfaces.UserManager;
-import com.test.storage.interfaces.UserDao;
 
 /**
  * UserManagerImpl
@@ -35,7 +34,7 @@ public class UserManagerImpl implements UserManager {
 
 
 	@Override
-	public User getUser(String username) {
+	public List<User> getUser(String username) {
 		return this.userDAO.getUser(username);
 	}
 

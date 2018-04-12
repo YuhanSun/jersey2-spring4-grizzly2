@@ -1,6 +1,6 @@
 /* Copyright 2013-2014 (c) Sepior Aps, all rights reserved. */
 
-package com.test.domain;
+package edu.asu.mywebapp.domain;
 
 /**
  * User
@@ -35,4 +35,10 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	@Override
+	public String toString()
+    {
+        return id + "|" + username + "|" + name;
+    }
 }

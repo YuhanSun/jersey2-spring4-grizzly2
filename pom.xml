@@ -2,12 +2,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.grizzly.samples</groupId>
-    <artifactId>jersey2-spring4-grizzly2</artifactId>
+    <groupId>edu.asu</groupId>
+    <artifactId>mywebapp</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>jersey2-spring4-grizzly2</name>
+    <name>mywebapp</name>
     <url>https://github.com/janusdn/jersey2-spring4-grizzly2</url>
     <build>
         <defaultGoal>install</defaultGoal>
@@ -23,14 +23,54 @@
                 <directory>src/main/resources</directory>
             </resource>
         </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>edu.asu.mywebapp.Start</mainClass>
+                                </transformer>
+                                <!--  use transformer to handle merge of META-INF/services - see http://java.net/jira/browse/JERSEY-440?focusedCommentId=14822&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#action_14822 -->
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>reference.conf</resource>
+                                </transformer>
+                            </transformers>
+                            <filters>
+                                <!--  filter to address "Invalid signature file" issue - see http://stackoverflow.com/a/6743609/589215-->
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jersey-version>2.6</jersey-version>
-        <spring.version>4.0.2.RELEASE</spring.version>
+        <spring.version>4.1.9.RELEASE</spring.version>
         <grizzly-version>2.3.11</grizzly-version>
-        <postgres-version>9.1-901.jdbc4</postgres-version>
+        <postgres-version>42.2.2.jre7</postgres-version>
         <servlet-api-version>3.0.1</servlet-api-version>
     </properties>
 
@@ -43,7 +83,7 @@
 		</dependency>
     
    		<dependency>
-      		<groupId>postgresql</groupId>
+      		<groupId>org.postgresql</groupId>
       		<artifactId>postgresql</artifactId>
       		<version>${postgres-version}</version>
     	</dependency>
@@ -58,7 +98,7 @@
     		<groupId>javax.servlet</groupId>
     		<artifactId>javax.servlet-api</artifactId>
     		<version>${servlet-api-version}</version>
-    		<scope>provided</scope>
+    		<scope>compile</scope>
 		</dependency>
 	
  		<dependency>
@@ -117,7 +157,5 @@
 			<artifactId>spring-tx</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-        
     </dependencies>
-    
 </project>

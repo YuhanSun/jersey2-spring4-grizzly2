@@ -1,10 +1,10 @@
 /* Copyright 2013-2014 (c) Sepior Aps, all rights reserved. */
 
-package com.test.domain.interfaces;
+package edu.asu.mywebapp.domain.interfaces;
 
 import java.util.List;
 
-import com.test.domain.User;
+import edu.asu.mywebapp.domain.User;
 
 /**
  * UserManager
@@ -16,7 +16,7 @@ public interface UserManager {
 
 	void insertUserAndFailTransation(User user);
 
-	User getUser(String username);
+	List<User> getUser(String username);
 
 	List<User> getUsers();
 

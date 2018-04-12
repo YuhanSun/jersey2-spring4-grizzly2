@@ -1,6 +1,6 @@
 /* Copyright 2013-2014 (c) Sepior Aps, all rights reserved. */
 
-package com.test.storage;
+package edu.asu.mywebapp.storage;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,13 +8,13 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import edu.asu.mywebapp.storage.interfaces.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
-import com.test.domain.User;
-import com.test.storage.interfaces.UserDao;
+import edu.asu.mywebapp.domain.User;
 
 /**
  * UserDaoImpl
@@ -41,9 +41,9 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
 	}
 
 	@Override
-	public User getUser(String username) {
-		User user = this.getJdbcTemplate().
-				queryForObject(
+	public List<User> getUser(String username) {
+		List<User> user = this.getJdbcTemplate().
+				query(
 						"SELECT * FROM USERS WHERE USERNAME = ?",
 						new Object[] { username },
 						new UserMapper()
