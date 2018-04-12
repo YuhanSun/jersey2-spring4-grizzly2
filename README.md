@@ -1,6 +1,6 @@
 # ASU CSE412 DBMS course project phase 3 template
 
-https://travis-ci.org/jiayuasu/jersey2-spring4-grizzly2.svg?branch=master
+[![Build Status](https://travis-ci.org/jiayuasu/jersey2-spring4-grizzly2.svg?branch=master)](https://travis-ci.org/jiayuasu/jersey2-spring4-grizzly2)
 
 This repository shows an example of how to integrate Jersey 2.6, Spring 4.0.2, and Grizzly 2.3.11, PostgreSQL JDBC.
 
