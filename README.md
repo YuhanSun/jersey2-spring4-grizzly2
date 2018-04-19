@@ -42,7 +42,7 @@ sudo apt-get install maven
 JRE 1.7 or later
 
 ```
-sudo apt-get install default-jre
+sudo apt-get install default-jdk
 ```
 
 
