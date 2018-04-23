@@ -116,5 +116,27 @@ http://localhost:3388/getuser/
 ```
 which should return all users.
 
+## Try the function using a client HTML
+
+This client html page uses JQuery ajax to compose HTTP requests.
+
+### Install CORS addons for your browser
+
+Make sure you install CORS addons for your browser otherwise you will see CORS error.
+
+Firefox: https://addons.mozilla.org/en-US/firefox/addon/cors-everywhere/?src=search
+Chrome: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en
+
+### Open the client
+
+1. Open the "index.html" at `client/index.html`.
+2. Enter a name in the text box and click "Add user" or "Get user".
+3. Click "Get all users".
+
+Each time you click a button, a dialog window will pop up.
+
+### Modify the function
+Open the html using a web IDE or text editor and change the function you need.
+
 ## What's the next step?
 Use your own movide database. Use your own HTML and Javascript to send/receive the HTTP requests and draw charts.

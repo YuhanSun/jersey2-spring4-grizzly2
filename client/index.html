@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            function addUser() {
+                var username = $("#username").val();
+
+                $.ajax({
+                    url: "http://localhost:3388/adduser/"+username,
+                    type: "GET",
+                    data: { username: username },
+                    success: function(result) {
+                        alert(result);
+                    },
+                    error: function() {
+                        alert('Something went wrong');
+                    }
+                });
+            }
+            function getUser() {
+                var username = $("#username").val();
+
+                $.ajax({
+                    url: "http://localhost:3388/getuser/"+username,
+                    type: "GET",
+                    data: { username: username },
+                    success: function(result) {
+                        alert('Given '+username + ", I found " +result);
+                    },
+                    error: function() {
+                        alert('Something went wrong');
+                    }
+                });
+            }
+            $("#adduser").on("click", function() {
+                addUser();
+            });
+            $("#getuser").on("click", function() {
+                getUser();
+            });
+            $("#getall").click(function(){
+                $.get("http://localhost:3388/getuser", function(data){
+                    alert("Got users: " + data);
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+
+
+<input type="text" id="username">
+<button id="adduser">Add this user</button><button id="getuser">Get this user</button>
+<br>
+
+<button id="getall">Get all users</button>
+
+</body>
+</html>
