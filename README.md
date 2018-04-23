@@ -6,7 +6,7 @@ This repository shows an example of how to integrate Jersey 2.6, Spring 4.0.2, a
 
 I have updated the template a little bit to make it suitable for our project. To see the old template, please refer to "Forked from".
 
-#### Note: this template is only tested on Ubuntu 16.04 LTS. All terminal commands mentioned in the README is only tested on Ubuntu.
+#### Note: this template works on Windows, Linux and MacOS since it is written in Java. However, all terminal commands mentioned in the README is only for Ubuntu. There are alternative commands on other OS.
 
 ## DBMS setting
 
