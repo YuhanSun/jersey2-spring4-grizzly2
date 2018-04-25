@@ -39,7 +39,7 @@ Apache Maven 3
 sudo apt-get install maven
 ```
 
-JRE 1.7 or later
+JDK 1.7 or later (not JRE!)
 
 ```
 sudo apt-get install default-jdk
