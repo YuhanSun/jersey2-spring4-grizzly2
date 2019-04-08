@@ -10,9 +10,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import CypherMiddleWare.RisoTreeConnector;
 import commons.Config;
 import commons.Neo4jGraphUtility;
+import cypher.middleware.RisoTreeConnector;
 import edu.asu.mywebapp.domain.User;
 import edu.asu.mywebapp.domain.interfaces.UserManager;
 

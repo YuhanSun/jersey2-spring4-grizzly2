@@ -1,4 +1,4 @@
-package CypherMiddleWare;
+package cypher.middleware;
 
 import java.util.Collection;
 import java.util.HashMap;

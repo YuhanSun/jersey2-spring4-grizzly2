@@ -1,4 +1,4 @@
-package CypherMiddleWare;
+package cypher.middleware;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,6 +12,8 @@ import commons.Config;
 import commons.Neo4jGraphUtility;
 import commons.Query_Graph;
 import commons.Util;
+import cypher.middleware.CypherDecoder;
+import cypher.middleware.RisoTreeConnector;
 
 public class RisoTreeConnectorTest {
 
