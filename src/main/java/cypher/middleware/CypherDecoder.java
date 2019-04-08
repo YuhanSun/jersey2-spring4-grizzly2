@@ -17,7 +17,7 @@ import commons.Util;
 
 public class CypherDecoder {
 
-  public static Query_Graph getQueryGraph(String query, String spatialNode, String rectangleStr,
+  public static Query_Graph getQueryGraph(String query, String spatialNode, MyRectangle rectangle,
       GraphDatabaseService service) {
     String[] nodeStrings = getNodeStrings(query);
     HashMap<String, Integer> nodeVariableIdMap = getNodeVariableIdMap(nodeStrings);
@@ -34,7 +34,7 @@ public class CypherDecoder {
     query_Graph.label_list_string = labelList;
     int spatialId = nodeVariableIdMap.get(spatialNode);
     query_Graph.Has_Spa_Predicate[spatialId] = true;
-    query_Graph.spa_predicate[spatialId] = new MyRectangle(rectangleStr);
+    query_Graph.spa_predicate[spatialId] = rectangle;
     String[] nodeVariables = new String[nodeVariableIdMap.size()];
     for (String variable : nodeVariableIdMap.keySet()) {
       nodeVariables[nodeVariableIdMap.get(variable)] = variable;
