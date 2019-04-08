@@ -31,10 +31,10 @@ public class TestResource {
   // public Driver driver =
   // GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "syh19910205"));
 
-  static String risoTreeDbPath = "D:/Project_Data/wikidata-20180308-truthy-BETA.nt/"
-      + "neo4j-community-3.4.12_risotree/data/databases/graph.db";
-  // static String risoTreeDbPath =
-  // "/hdd/code/yuhansun/data/wikidata/neo4j-community-3.4.12_risotree/data/databases/graph.db";
+  // static String risoTreeDbPath = "D:/Project_Data/wikidata-20180308-truthy-BETA.nt/"
+  // + "neo4j-community-3.4.12_risotree/data/databases/graph.db";
+  static String risoTreeDbPath =
+      "/hdd/code/yuhansun/data/wikidata/neo4j-community-3.4.12_risotree/data/databases/graph.db";
   public static GraphDatabaseService dbserviceRisoTree =
       Neo4jGraphUtility.getDatabaseService(risoTreeDbPath);
 
