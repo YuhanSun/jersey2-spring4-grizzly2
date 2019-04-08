@@ -31,7 +31,7 @@ public class Neo4jGraphUtility {
 
   public static GraphDatabaseService getDatabaseService(String dbPath) {
     if (!OwnMethods.pathExist(dbPath)) {
-      Util.println(dbPath + " does not exist!");
+      LOGGER.info(dbPath + " does not exist!");
       System.exit(-1);
     }
     LOGGER.info("connect to database " + dbPath);
