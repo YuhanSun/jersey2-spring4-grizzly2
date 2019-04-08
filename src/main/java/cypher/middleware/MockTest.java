@@ -2,10 +2,8 @@ package cypher.middleware;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import org.neo4j.graphdb.GraphDatabaseService;
 import commons.Neo4jGraphUtility;
-import commons.Query_Graph;
 import commons.Util;
 
 public class MockTest {
@@ -36,14 +34,10 @@ public class MockTest {
   }
 
   public void reformQueriesTest() throws Exception {
-    Query_Graph query_Graph =
-        CypherDecoder.getQueryGraph(query, "spatialnode", "(0, 0, 0,0)", service);
-    HashMap<Integer, Collection<Long>> candidates = new HashMap<>();
     Collection<Long> candidateIds = new ArrayList<>();
     candidateIds.add((long) 0);
     candidateIds.add((long) 1);
-    candidates.put(0, candidateIds);
-    Util.println(RisoTreeConnector.reformQueries(query, query_Graph, candidates));
+    Util.println(RisoTreeConnector.reformQueries(query, "spatialNode", candidateIds));
   }
 
 }
