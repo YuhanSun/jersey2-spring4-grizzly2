@@ -44,6 +44,7 @@ public class Config {
   public final static String PNPrefix = "PN";
   public final static String PNSizePrefix = "PNSize";
   public final static String BBoxName = "bbox";
+  public final static int CypherBulkSize = 500;
 
   public void setDatasetName(String pName) {
     this.dataset = pName;
