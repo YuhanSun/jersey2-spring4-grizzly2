@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import org.neo4j.graphdb.GraphDatabaseService;
+import commons.Config;
 import commons.Query_Graph;
 import commons.Util;
 import graph.RisoTreeQueryPN;
@@ -12,7 +13,8 @@ import graph.RisoTreeQueryPN;
 public class RisoTreeConnector {
   GraphDatabaseService service;
   RisoTreeQueryPN risoTreeQueryPN;
-  final static int bulkSize = 500; // the number of candidates to form a cypher query.
+  final static int bulkSize = Config.CypherBulkSize; // the number of candidates to form a cypher
+                                                     // query.
 
   public RisoTreeConnector(GraphDatabaseService service, String dataset, int MAX_HOPNUM) {
     // TODO Auto-generated constructor stub
