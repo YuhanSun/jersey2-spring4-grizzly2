@@ -148,6 +148,12 @@ public class RisoTreeQueryPN {
     MAX_HOPNUM = pMAXHOPNUM;
   }
 
+  public RisoTreeQueryPN(GraphDatabaseService service, String dataset, int MAX_HOPNUM) {
+    this.dbservice = service;
+    this.dataset = dataset;
+    this.MAX_HOPNUM = MAX_HOPNUM;
+  }
+
   public static int[][] Ini_Minhop(Query_Graph query_Graph) {
     int query_node_count = query_Graph.graph.size();
     int[][] minhop_index = new int[query_node_count][];
@@ -640,7 +646,6 @@ public class RisoTreeQueryPN {
           if (node.hasProperty("bbox")) {
             double[] bbox = (double[]) node.getProperty("bbox");
             MyRectangle MBR = new MyRectangle(bbox[0], bbox[1], bbox[2], bbox[3]);
-            // OwnMethods.Print(MBR);
 
             for (int key : spa_predicates.keySet()) {
               MyRectangle queryRectangle = spa_predicates.get(key);
@@ -673,7 +678,7 @@ public class RisoTreeQueryPN {
           Util.println("No result satisfy the query.");
           tx.success();
           tx.close();
-          return null;
+          return candidateSet;
         }
 
         // traverse to the leaf node level and start to form the cypher query
