@@ -613,7 +613,7 @@ public class RisoTreeQueryPN {
           PN_size_propertyname.get(spaID).put(neighborID, new HashSet<String>());
           PN_list_propertyname.get(spaID).put(neighborID, new HashSet<String>());
           for (String PNName : spaPathsMap.get(spaID).get(neighborID)) {
-            PN_size_propertyname.get(spaID).get(neighborID).add(PNName + "_size");
+            PN_size_propertyname.get(spaID).get(neighborID).add(RisoTreeUtil.getPNSizeName(PNName));
             PN_list_propertyname.get(spaID).get(neighborID).add(PNName);
           }
         }
@@ -622,7 +622,6 @@ public class RisoTreeQueryPN {
       if (outputLevelInfo) {
         logWriteLine = String.format("min_hop: %s\nNL_property: %s", min_hop, PN_size_propertyname);
         Util.println(logWriteLine);
-        OwnMethods.WriteFile(logPath, true, logWriteLine + "\n");
       }
 
       Transaction tx = dbservice.beginTx();
@@ -643,8 +642,8 @@ public class RisoTreeQueryPN {
         Iterator<Node> iterator = cur_list.iterator();
         while (iterator.hasNext()) {
           Node node = iterator.next();
-          if (node.hasProperty("bbox")) {
-            double[] bbox = (double[]) node.getProperty("bbox");
+          if (node.hasProperty(Config.BBoxName)) {
+            double[] bbox = (double[]) node.getProperty(Config.BBoxName);
             MyRectangle MBR = new MyRectangle(bbox[0], bbox[1], bbox[2], bbox[3]);
 
             for (int key : spa_predicates.keySet()) {
@@ -671,7 +670,6 @@ public class RisoTreeQueryPN {
           logWriteLine = String.format("level %d time: %d", level_index,
               System.currentTimeMillis() - startLevel);
           Util.println(logWriteLine);
-          OwnMethods.WriteFile(logPath, true, logWriteLine + "\n");
         }
 
         if (overlap_MBR_list.isEmpty() == true) {
@@ -702,11 +700,12 @@ public class RisoTreeQueryPN {
           }
 
           for (Node node : overlap_MBR_list) {
-            double[] bbox = (double[]) node.getProperty("bbox");
+            double[] bbox = (double[]) node.getProperty(Config.BBoxName);
             MyRectangle MBR = new MyRectangle(bbox[0], bbox[1], bbox[2], bbox[3]);
             // OwnMethods.Print(MBR);
             double MBR_area = MBR.area();
-            int spa_count = (Integer) node.getProperty("count");
+            // int spa_count = (Integer) node.getProperty("count");
+            int spa_count = 100;
 
             for (int key : spa_predicates.keySet()) {
               MyRectangle queryRectangle = spa_predicates.get(key);
@@ -750,24 +749,23 @@ public class RisoTreeQueryPN {
             if (outputLevelInfo) {
               logWriteLine = String.format("spa_card %d %f", key, spa_card);
               Util.println(logWriteLine);
-              OwnMethods.WriteFile(logPath, true, logWriteLine + "\n");
             }
 
             for (int neighbor_id : PN_list_propertyname.get(key).keySet())
               for (String properName : PN_list_propertyname.get(key).get(neighbor_id)) {
-                double card = NL_cards.get(key).get(neighbor_id).get(properName + "_size");
+                double card =
+                    NL_cards.get(key).get(neighbor_id).get(RisoTreeUtil.getPNSizeName(properName));
                 if (card < min_NL_card) {
                   min_NL_spa_id = key;
                   min_NL_neighbor_id = neighbor_id;
                   min_NL_card = card;
                   minPNListPropertyname = properName;
-                  minPNSizePropertyname = properName += "_size";
+                  minPNSizePropertyname = RisoTreeUtil.getPNSizeName(properName);
                 }
                 if (outputLevelInfo) {
                   logWriteLine = String.format("%d %d %s estimate size: %f", key, neighbor_id,
                       properName, card);
                   Util.println(logWriteLine);
-                  OwnMethods.WriteFile(logPath, true, logWriteLine + "\n");
                 }
               }
           }
@@ -776,7 +774,6 @@ public class RisoTreeQueryPN {
             logWriteLine = String.format("level %d min card : %f", level_index,
                 Math.min(min_spa_card, min_NL_card));
             Util.println(logWriteLine);
-            OwnMethods.WriteFile(logPath, true, logWriteLine + "\n");
           }
 
           // construct the NL_list with the highest selectivity
@@ -810,7 +807,6 @@ public class RisoTreeQueryPN {
             logWriteLine += String.format("level %d time: %d\n", level_index,
                 System.currentTimeMillis() - startLevel);
             Util.println(logWriteLine);
-            OwnMethods.WriteFile(logPath, true, logWriteLine + "\n");
           }
 
           // set realMinPNSize to 0 to force start the neighbor
@@ -842,7 +838,7 @@ public class RisoTreeQueryPN {
               // default fan-out of neo4j spatial is 100
               for (Relationship relationship : rels) {
                 Node geom = relationship.getEndNode();
-                double[] bbox = (double[]) geom.getProperty("bbox");
+                double[] bbox = (double[]) geom.getProperty(Config.BBoxName);
                 MyRectangle rectangle = new MyRectangle(bbox);
                 if (rectangle.intersect(queryRect) != null) {
                   candidateIds.add(geom.getId());
@@ -861,7 +857,6 @@ public class RisoTreeQueryPN {
               logWriteLine += String.format("Located in nodes: %d\n", located_in_count);
               logWriteLine += String.format("level %d time: %d", level_index, levelTime);
               Util.println(logWriteLine);
-              OwnMethods.WriteFile(logPath, true, logWriteLine + "\n\n");
             }
             tx.success();
             tx.close();

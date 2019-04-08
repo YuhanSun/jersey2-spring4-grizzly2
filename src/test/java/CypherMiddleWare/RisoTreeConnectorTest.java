@@ -3,10 +3,12 @@ package CypherMiddleWare;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.neo4j.graphdb.GraphDatabaseService;
+import commons.Config;
 import commons.Neo4jGraphUtility;
 import commons.Query_Graph;
 import commons.Util;
@@ -15,6 +17,7 @@ public class RisoTreeConnectorTest {
 
   String homeDir, dbPath;
   String query;
+  String dataset = Config.Datasets.wikidata.name();
   GraphDatabaseService service;
 
   @Before
@@ -22,14 +25,23 @@ public class RisoTreeConnectorTest {
     // ClassLoader classLoader = getClass().getClassLoader();
     // File file = new File(classLoader.getResource("").getFile());
     // homeDir = file.getAbsolutePath();
-    homeDir = "/Users/zhouyang/Documents/tmp";
-    dbPath = homeDir + "/data/graph.db";
+
+    // mac local test
+    // homeDir = "/Users/zhouyang/Documents/tmp";
+    // dbPath = homeDir + "/data/graph.db";
+
+    // windows wikidata db
+    homeDir = "D:/Project_Data/wikidata-20180308-truthy-BETA.nt";
+    dbPath = homeDir + "/neo4j-community-3.4.12/data/databases/graph.db";
+
     query = "match (a:A)-->(b:B)<--(c:TEST) where a.type = 0 return a, b, c limit 10";
     query = "MATCH (c:C)--(a:A)-[b]-(spatialnode:Spatial) WHERE "
         + "22.187478257613602 <= spatialnode.lat <= 22.225842149771214 AND "
         + "113.50180238485339 <= spatialnode.lon <= 113.56607615947725 " + "RETURN * LIMIT 10";
-    query =
-        "MATCH (a:`heritage designation`)-[b]-(spatialnode:museum) WHERE 22.187478257613602 <= spatialnode.lat <= 22.225842149771214 AND 113.50180238485339 <= spatialnode.lon <= 113.56607615947725 RETURN spatialnode LIMIT 5";
+    query = "MATCH (a:`heritage designation`)-[b]-(spatialnode:museum) "
+        + "WHERE 22.187478257613602 <= spatialnode.lat <= 22.225842149771214 "
+        + "AND 113.50180238485339 <= spatialnode.lon <= 113.56607615947725 "
+        + "RETURN spatialnode LIMIT 5";
     Util.println(query);
     service = Neo4jGraphUtility.getDatabaseServiceNotExistCreate(dbPath);
   }
@@ -49,6 +61,15 @@ public class RisoTreeConnectorTest {
     candidateIds.add((long) 1);
     candidates.put(0, candidateIds);
     Util.println(RisoTreeConnector.reformQueries(query, query_Graph, candidates));
+  }
+
+  @Test
+  public void getRefinedQueriesTest() throws Exception {
+    RisoTreeConnector risoTreeConnector = new RisoTreeConnector(service, dataset, 1);
+    String rectangleStr =
+        "(113.50180238485339, 22.187478257613602, 113.56607615947725,22.225842149771214)";
+    List<String> queries = risoTreeConnector.getRefinedQueries(query, "spatialnode", rectangleStr);
+    Util.println(queries);
   }
 
 }
