@@ -41,7 +41,10 @@ public class RisoTreeConnector {
     } else if (candidates.size() > 1) {
       throw new Exception("More than one candidates is returned!");
     }
-    return reformQueries(query, query_Graph, candidates);
+
+    int startQueryNodeId = candidates.keySet().iterator().next();
+    String startQueryNodeVariable = query_Graph.nodeVariables[startQueryNodeId];
+    return reformQueries(query, startQueryNodeVariable, candidates.get(startQueryNodeId));
   }
 
   /**
@@ -53,11 +56,10 @@ public class RisoTreeConnector {
    * @return
    * @throws Exception
    */
-  public static List<String> reformQueries(String query, Query_Graph query_Graph,
-      HashMap<Integer, Collection<Long>> candidates) throws Exception {
+  public static List<String> reformQueries(String query, String startQueryNodeVariable,
+      Collection<Long> candidateIds) throws Exception {
     List<String> res = new LinkedList<>();
-    int startQueryNodeId = candidates.keySet().iterator().next();
-    String startQueryNodeVariable = query_Graph.nodeVariables[startQueryNodeId];
+
     int index = 0;
     Util.println(query);
 
@@ -67,7 +69,7 @@ public class RisoTreeConnector {
       throw new Exception(String.format("Query: %s. \nIt has more than one where!", query));
     }
     String idString = "[";
-    for (long candidateId : candidates.get(startQueryNodeId)) {
+    for (long candidateId : candidateIds) {
       if (index == 0) {
         idString = String.format("[%d", candidateId);
         index++;
