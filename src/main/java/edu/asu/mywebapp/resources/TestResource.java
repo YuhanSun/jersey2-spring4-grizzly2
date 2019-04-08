@@ -1,7 +1,7 @@
 package edu.asu.mywebapp.resources;
 
-import java.security.SecureRandom;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import commons.Config;
 import commons.Neo4jGraphUtility;
 import cypher.middleware.RisoTreeConnector;
-import edu.asu.mywebapp.domain.User;
 import edu.asu.mywebapp.domain.interfaces.UserManager;
 
 /**
@@ -25,15 +24,17 @@ import edu.asu.mywebapp.domain.interfaces.UserManager;
 @Path("/")
 public class TestResource {
 
+  final static Logger LOGGER = Logger.getLogger(TestResource.class.getName());
+
   final static String dataset = Config.Datasets.wikidata.name();
 
   // public Driver driver =
   // GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "syh19910205"));
 
-  // static String risoTreeDbPath = "D:/Project_Data/wikidata-20180308-truthy-BETA.nt/"
-  // + "neo4j-community-3.4.12/data/databases/graph.db";
-  static String risoTreeDbPath =
-      "/hdd/code/yuhansun/data/wikidata/neo4j-community-3.4.12_risotree/data/databases/graph.db";
+  static String risoTreeDbPath = "D:/Project_Data/wikidata-20180308-truthy-BETA.nt/"
+      + "neo4j-community-3.4.12_risotree/data/databases/graph.db";
+  // static String risoTreeDbPath =
+  // "/hdd/code/yuhansun/data/wikidata/neo4j-community-3.4.12_risotree/data/databases/graph.db";
   public static GraphDatabaseService dbserviceRisoTree =
       Neo4jGraphUtility.getDatabaseService(risoTreeDbPath);
 
@@ -87,12 +88,8 @@ public class TestResource {
   @Path("/adduser/{username}")
   @Produces("text/html")
   public String addUser(@PathParam("username") String username) {
-    User user = new User();
-    user.setId(new SecureRandom().nextInt());
-    user.setName("test");
-    user.setUsername(username);
-    this.userManager.insertUser(user);
-    return "Added one user";
+    LOGGER.info(username);
+    return "Added one user " + username;
   }
 
   @GET

@@ -2,6 +2,7 @@ package commons;
 
 import java.io.File;
 import java.util.HashSet;
+import java.util.logging.Logger;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
@@ -9,6 +10,8 @@ import org.neo4j.graphdb.RelationshipType;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 
 public class Neo4jGraphUtility {
+
+  public static final Logger LOGGER = Logger.getLogger(Neo4jGraphUtility.class.getName());
 
   /**
    * Return all the graph neighbors for the given node. Only consider "GRAPH_LINK". RTree-related
@@ -31,6 +34,7 @@ public class Neo4jGraphUtility {
       Util.println(dbPath + " does not exist!");
       System.exit(-1);
     }
+    LOGGER.info("connect to database " + dbPath);
     return getDatabaseServiceNotExistCreate(dbPath);
   }
 

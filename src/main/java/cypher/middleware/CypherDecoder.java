@@ -17,7 +17,6 @@ import commons.Util;
 
 public class CypherDecoder {
 
-
   public static Query_Graph getQueryGraph(String query, String spatialNode, String rectangleStr,
       GraphDatabaseService service) {
     String[] nodeStrings = getNodeStrings(query);
