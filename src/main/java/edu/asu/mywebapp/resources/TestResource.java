@@ -56,15 +56,16 @@ public class TestResource {
   @Produces("text/html")
   public String risotree(@PathParam("input") String input) throws Exception {
     System.out.println(input);
-    String[] strings = StringUtils.split(input, ';');
+    String[] strings = input.split(" delimiter ");
     String query = strings[0];
-    String spatialNode = strings[1];
-    String rectangleStr = strings[2];
-    MyRectangle rectangle = convertFrontRectangleStringToMyRectangle(rectangleStr);
-
     LOGGER.info("query: " + query);
+    String spatialNode = strings[1];
     LOGGER.info("spatialnode: " + spatialNode);
+    String rectangleStr = strings[2];
+    LOGGER.info("rectangleStr: " + rectangleStr);
+    MyRectangle rectangle = convertFrontRectangleStringToMyRectangle(rectangleStr);
     LOGGER.info("rectangle: " + rectangle);
+
 
     // String result = "";
     // Session session = driver.session();
