@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.neo4j.graphdb.GraphDatabaseService;
 import commons.Config;
+import commons.MyRectangle;
 import commons.Neo4jGraphUtility;
 import commons.Util;
 
@@ -62,7 +63,8 @@ public class RisoTreeConnectorTest {
     RisoTreeConnector risoTreeConnector = new RisoTreeConnector(service, dataset, 1);
     String rectangleStr =
         "(113.50180238485339, 22.187478257613602, 113.56607615947725,22.225842149771214)";
-    List<String> queries = risoTreeConnector.getRefinedQueries(query, "spatialnode", rectangleStr);
+    MyRectangle rectangle = new MyRectangle(rectangleStr);
+    List<String> queries = risoTreeConnector.getRefinedQueries(query, "spatialnode", rectangle);
     Util.println(queries);
   }
 
