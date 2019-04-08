@@ -41,11 +41,13 @@ public class RisoTreeConnectorTest {
 
   @Test
   public void reformQueriesTest() throws Exception {
-    Query_Graph query_Graph = CypherDecoder.getQueryGraph(query, "spatialnode", "()", service);
+    Query_Graph query_Graph =
+        CypherDecoder.getQueryGraph(query, "spatialnode", "(0, 0, 0,0)", service);
     HashMap<Integer, Collection<Long>> candidates = new HashMap<>();
     Collection<Long> candidateIds = new ArrayList<>();
     candidateIds.add((long) 0);
     candidateIds.add((long) 1);
+    candidates.put(0, candidateIds);
     Util.println(RisoTreeConnector.reformQueries(query, query_Graph, candidates));
   }
 

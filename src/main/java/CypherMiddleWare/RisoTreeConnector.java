@@ -20,6 +20,16 @@ public class RisoTreeConnector {
     risoTreeQueryPN = new RisoTreeQueryPN(service, dataset, MAX_HOPNUM);
   }
 
+
+  /**
+   * Given an input query to get the refined queries by using RisoTree.
+   *
+   * @param query
+   * @param spatialNode
+   * @param rectangleStr
+   * @return
+   * @throws Exception
+   */
   public List<String> getRefinedQueries(String query, String spatialNode, String rectangleStr)
       throws Exception {
     Query_Graph query_Graph =
@@ -34,6 +44,15 @@ public class RisoTreeConnector {
     return reformQueries(query, query_Graph, candidates);
   }
 
+  /**
+   * Given a collection of candidates to form the new queries with id in operator.
+   *
+   * @param query
+   * @param query_Graph
+   * @param candidates
+   * @return
+   * @throws Exception
+   */
   public static List<String> reformQueries(String query, Query_Graph query_Graph,
       HashMap<Integer, Collection<Long>> candidates) throws Exception {
     List<String> res = new LinkedList<>();
