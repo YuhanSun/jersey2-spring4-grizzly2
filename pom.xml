@@ -64,6 +64,26 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.12</version>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
@@ -74,9 +94,11 @@
 		<grizzly-version>2.3.11</grizzly-version>
 		<postgres-version>42.2.2.jre7</postgres-version>
 		<servlet-api-version>3.0.1</servlet-api-version>
-		<neo4j.version>3.1.1</neo4j.version>
+		<!-- <neo4j.version>3.1.1</neo4j.version> -->
 		<!-- general neo4j usage -->
 		<neo4j.org.version>3.4.12</neo4j.org.version>
+
+		<!-- <maven.test.skip>true</maven.test.skip> -->
 	</properties>
 
 	<repositories>
@@ -113,13 +135,13 @@
 		<dependency>
 			<groupId>org.neo4j</groupId>
 			<artifactId>neo4j-kernel</artifactId>
-			<version>${neo4j.version}</version>
+			<version>${neo4j.org.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.neo4j</groupId>
 			<artifactId>neo4j-lucene-index</artifactId>
-			<version>${neo4j.version}</version>
+			<version>${neo4j.org.version}</version>
 		</dependency>
 
 		<dependency>
@@ -133,7 +155,7 @@
 			<artifactId>neo4j-spatial</artifactId>
 			<version>0.26.2-neo4j-3.4.12</version>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/commons-cli/commons-cli -->
 		<dependency>
 			<groupId>commons-cli</groupId>
