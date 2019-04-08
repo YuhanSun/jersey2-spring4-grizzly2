@@ -23,7 +23,7 @@ public class CypherDecoder {
     String[] nodeStrings = getNodeStrings(query);
     HashMap<String, Integer> nodeVariableIdMap = getNodeVariableIdMap(nodeStrings);
     String[] labelList = getQueryLabelList(nodeVariableIdMap, nodeStrings);
-    Result result = service.execute(query);
+    Result result = service.execute("explain " + query);
     ExecutionPlanDescription planDescription = result.getExecutionPlanDescription();
     Util.println(planDescription);
     List<ExecutionPlanDescription> plans =
@@ -36,11 +36,13 @@ public class CypherDecoder {
     int spatialId = nodeVariableIdMap.get(spatialNode);
     query_Graph.Has_Spa_Predicate[spatialId] = true;
     query_Graph.spa_predicate[spatialId] = new MyRectangle(rectangleStr);
-
+    String[] nodeVariables = new String[nodeVariableIdMap.size()];
+    for (String variable : nodeVariableIdMap.keySet()) {
+      nodeVariables[nodeVariableIdMap.get(variable)] = variable;
+    }
+    query_Graph.nodeVariables = nodeVariables;
     return query_Graph;
   }
-
-
 
   private static ArrayList<ArrayList<Integer>> getGraphStructure(
       List<ExecutionPlanDescription> plans, HashMap<String, Integer> nodeVariableIdMap) {
