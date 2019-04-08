@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import org.neo4j.graphdb.GraphDatabaseService;
 import commons.Config;
+import commons.MyRectangle;
 import commons.Query_Graph;
 import commons.Util;
 import graph.RisoTreeQueryPN;
@@ -32,10 +33,9 @@ public class RisoTreeConnector {
    * @return
    * @throws Exception
    */
-  public List<String> getRefinedQueries(String query, String spatialNode, String rectangleStr)
+  public List<String> getRefinedQueries(String query, String spatialNode, MyRectangle rectangle)
       throws Exception {
-    Query_Graph query_Graph =
-        CypherDecoder.getQueryGraph(query, spatialNode, rectangleStr, service);
+    Query_Graph query_Graph = CypherDecoder.getQueryGraph(query, spatialNode, rectangle, service);
     HashMap<Integer, Collection<Long>> candidates = risoTreeQueryPN.getCandidateSet(query_Graph);
 
     if (candidates.size() == 0) {

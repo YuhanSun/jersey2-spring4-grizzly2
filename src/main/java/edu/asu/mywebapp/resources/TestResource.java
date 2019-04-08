@@ -11,6 +11,7 @@ import org.neo4j.graphdb.GraphDatabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import commons.Config;
+import commons.MyRectangle;
 import commons.Neo4jGraphUtility;
 import cypher.middleware.RisoTreeConnector;
 import edu.asu.mywebapp.domain.interfaces.UserManager;
@@ -32,12 +33,13 @@ public class TestResource {
   // GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "syh19910205"));
 
   // 407CD
-  // static String risoTreeDbPath = "D:/Project_Data/wikidata-20180308-truthy-BETA.nt/"
-  // + "neo4j-community-3.4.12_risotree/data/databases/graph.db";
+  static String risoTreeDbPath = "D:/Project_Data/wikidata-20180308-truthy-BETA.nt/"
+      + "neo4j-community-3.4.12_risotree/data/databases/graph.db";
 
   // server
-  static String risoTreeDbPath =
-      "/hdd/code/yuhansun/data/wikidata/neo4j-community-3.4.12_risotree/data/databases/graph.db";
+  // static String risoTreeDbPath =
+  // "/hdd/code/yuhansun/data/wikidata/neo4j-community-3.4.12_risotree/data/databases/graph.db";
+
   public static GraphDatabaseService dbserviceRisoTree =
       Neo4jGraphUtility.getDatabaseService(risoTreeDbPath);
 
@@ -58,6 +60,11 @@ public class TestResource {
     String query = strings[0];
     String spatialNode = strings[1];
     String rectangleStr = strings[2];
+    MyRectangle rectangle = convertFrontRectangleStringToMyRectangle(rectangleStr);
+
+    LOGGER.info("query: " + query);
+    LOGGER.info("spatialnode: " + spatialNode);
+    LOGGER.info("rectangle: " + rectangle);
 
     // String result = "";
     // Session session = driver.session();
@@ -69,11 +76,17 @@ public class TestResource {
 
     RisoTreeConnector risoTreeConnector = new RisoTreeConnector(dbserviceRisoTree, dataset, 1);
     List<String> refinedQueries =
-        risoTreeConnector.getRefinedQueries(query, spatialNode, rectangleStr);
+        risoTreeConnector.getRefinedQueries(query, spatialNode, rectangle);
     return convertToFrontQuery(refinedQueries);
   }
 
-  public String convertToFrontQuery(List<String> queries) {
+  /**
+   * Convert from list of queries to the ; separated string.
+   *
+   * @param queries
+   * @return
+   */
+  public static String convertToFrontQuery(List<String> queries) {
     String res = "";
     int index = 0;
     for (String query : queries) {
@@ -85,6 +98,14 @@ public class TestResource {
       index++;
     }
     return res;
+  }
+
+  public static MyRectangle convertFrontRectangleStringToMyRectangle(String rectangleStr) {
+    String[] strings = rectangleStr.split(", ");
+    return new MyRectangle(Double.parseDouble(StringUtils.split(strings[2], ':')[1]),
+        Double.parseDouble(StringUtils.split(strings[0], ':')[1]),
+        Double.parseDouble(StringUtils.split(strings[3], ':')[1]),
+        Double.parseDouble(StringUtils.split(strings[1], ':')[1]));
   }
 
   @GET
