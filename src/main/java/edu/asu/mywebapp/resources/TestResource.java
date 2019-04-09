@@ -53,7 +53,7 @@ public class TestResource {
 
   // server
   static String risoTreeDbPath =
-      "/hdd/code/yuhansun/data/wikidata/neo4j-community-3.4.12_risotree/data/databases/graph.db";
+      "/hdd/code/yuhansun/data/wikidata/neo4j-community-3.4.12_backup_full/data/databases/graph.db";
   // static String RTreeDbPath =
   // "/hdd/code/yuhansun/data/wikidata/neo4j-community-3.4.12_rtree/data/databases/graph.db";
 
