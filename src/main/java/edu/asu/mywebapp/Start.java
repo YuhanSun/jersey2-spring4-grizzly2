@@ -58,7 +58,7 @@ public class Start {
       System.out.println("Press enter to stop the server...");
       System.in.read();
       Util.close(TestResource.dbserviceRisoTree);
-      // TestResource.driver.close();
+      TestResource.driver.close();
     } finally {
       server.shutdownNow();
     }

@@ -23,6 +23,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.swing.tree.DefaultMutableTreeNode;
+import org.neo4j.driver.v1.Value;
+import org.neo4j.driver.v1.summary.ProfiledPlan;
 import org.neo4j.graphdb.ExecutionPlanDescription;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
@@ -1279,6 +1281,26 @@ public class OwnMethods {
       ExecutionPlanDescription planDescription = queue.poll();
       dbhits += planDescription.getProfilerStatistics().getDbHits();
       for (ExecutionPlanDescription planDescription2 : planDescription.getChildren())
+        queue.add(planDescription2);
+    }
+    return dbhits;
+  }
+
+  public static long GetTotalDBHits(ProfiledPlan plan) {
+    long dbhits = 0;
+    Queue<ProfiledPlan> queue = new LinkedList<>();
+    // if (plan.())
+    queue.add(plan);
+    while (queue.isEmpty() == false) {
+      ProfiledPlan planDescription = queue.poll();
+      Util.println("dbhits = " + plan.dbHits());
+
+      Map<String, Value> arguments = planDescription.arguments();
+      Util.println(arguments);
+      Util.println("PageCacheHits: " + arguments.get("PageCacheHits"));
+
+      dbhits += plan.dbHits();
+      for (ProfiledPlan planDescription2 : planDescription.children())
         queue.add(planDescription2);
     }
     return dbhits;
