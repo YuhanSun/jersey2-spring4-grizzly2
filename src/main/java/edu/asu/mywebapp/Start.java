@@ -49,7 +49,7 @@ public class Start {
 
     HttpServer server = new HttpServer();
     NetworkListener listener =
-        new NetworkListener("grizzly2", "http://en4119507l.cidse.dhcp.asu.edu/", 3388);
+        new NetworkListener("grizzly2", "http://en4119507l.cidse.dhcp.asu.edu", 3388);
     server.addListener(listener);
 
     webappContext.deploy(server);
