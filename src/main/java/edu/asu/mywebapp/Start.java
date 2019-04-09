@@ -48,7 +48,8 @@ public class Start {
     servletRegistration.addMapping("/*");
 
     HttpServer server = new HttpServer();
-    NetworkListener listener = new NetworkListener("grizzly2", "10.218.107.47", 3388);
+    NetworkListener listener =
+        new NetworkListener("grizzly2", "http://en4119507l.cidse.dhcp.asu.edu/", 3388);
     server.addListener(listener);
 
     webappContext.deploy(server);
