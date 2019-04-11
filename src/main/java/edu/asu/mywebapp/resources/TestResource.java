@@ -146,7 +146,6 @@ public class TestResource {
     MyRectangle rectangle = convertFrontRectangleStringToMyRectangle(rectangleStr);
     LOGGER.info("rectangle: " + rectangle);
 
-
     // String result = "";
     // Session session = driver.session();
     // StatementResult rs = session.run(query);
