@@ -109,7 +109,7 @@ public class TestResource {
 
     start = System.currentTimeMillis();
     Session session = driver.session();
-    ResultSummary rs = session.run(query).consume();
+    ResultSummary rs = session.run("profile " + query).consume();
     time = System.currentTimeMillis() - start;
     ProfiledPlan profiledPlan = rs.profile();
     LOGGER.info(profiledPlan.toString());
@@ -118,8 +118,9 @@ public class TestResource {
     LOGGER.info("" + resultCount);
     Map<String, Value> arguments = profiledPlan.arguments();
     LOGGER.info(arguments.toString());
-    pageAccess = Integer.parseInt(arguments.get("PageCacheMisses").toString())
-        + Integer.parseInt(arguments.get("PageCacheHits").toString());
+    // pageAccess = Integer.parseInt(arguments.get("PageCacheMisses").toString())
+    // + Integer.parseInt(arguments.get("PageCacheHits").toString());
+    pageAccess = (int) OwnMethods.GetTotalDBHits(profiledPlan);
     String neo4jRecord = "neo4j\t" + formCompareResult(time, pageAccess, resultCount);
     LOGGER.info(neo4jRecord);
 

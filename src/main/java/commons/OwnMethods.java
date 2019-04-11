@@ -1298,6 +1298,7 @@ public class OwnMethods {
       Map<String, Value> arguments = planDescription.arguments();
       Util.println(arguments);
       Util.println("PageCacheHits: " + arguments.get("PageCacheHits"));
+      Util.println("PageCacheMisses: " + arguments.get("PageCacheMisses"));
 
       dbhits += plan.dbHits();
       for (ProfiledPlan planDescription2 : planDescription.children())
