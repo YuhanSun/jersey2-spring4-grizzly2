@@ -35,11 +35,30 @@
                     }
                 });
             }
+            function cypherQuery() {
+                var username = $("#username").val();
+
+                $.ajax({
+                    url: "http://localhost:3388/cypherquery/"+username,
+                    type: "GET",
+                    data: { username: username },
+                    success: function(result) {
+                        alert('Given '+username + ", I found " +result);
+                    },
+                    error: function() {
+                        alert('Something went wrong');
+                    }
+                });
+            }
+            
             $("#adduser").on("click", function() {
                 addUser();
             });
             $("#getuser").on("click", function() {
                 getUser();
+            });
+            $("#query").on("click", function() {
+                cypherQuery();
             });
             $("#getall").click(function(){
                 $.get("http://localhost:3388/getuser", function(data){
@@ -53,8 +72,10 @@
 
 
 <input type="text" id="username">
-<button id="adduser">Add this user</button><button id="getuser">Get this user</button>
+<!-- <button id="adduser">Add this user</button><button id="getuser">Get this user</button> -->
 <br>
+
+<button id="query">Run cypher query</button>
 
 <button id="getall">Get all users</button>
 

@@ -90,11 +90,11 @@ public class App {
 
   public static void main(String[] args) {
 
-    ServiceTest();
+    // ServiceTest();
     // CypherQueryTest();
     // initVariablesForTest();
     // Naive();
-    // test();
+    test();
     // batchRTreeInsert();
     // generateLabelList();
     // rangeQueryCompare();
