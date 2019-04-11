@@ -109,7 +109,7 @@ public class TestResource {
 
     start = System.currentTimeMillis();
     Session session = driver.session();
-    ResultSummary rs = session.run(query).consume();
+    ResultSummary rs = session.run("profile " + query).consume();
     time = System.currentTimeMillis() - start;
     ProfiledPlan profiledPlan = rs.profile();
     LOGGER.info(profiledPlan.toString());
