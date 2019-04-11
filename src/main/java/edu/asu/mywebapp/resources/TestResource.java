@@ -116,9 +116,11 @@ public class TestResource {
     session.close();
     resultCount = (int) profiledPlan.records();
     Map<String, Value> arguments = profiledPlan.arguments();
+    LOGGER.info(arguments.toString());
     pageAccess = Integer.parseInt(arguments.get("PageCacheMisses").toString())
         + Integer.parseInt(arguments.get("PageCacheHits").toString());
     String neo4jRecord = "neo4j\t" + formCompareResult(time, pageAccess, resultCount);
+    LOGGER.info(neo4jRecord);
 
     return risoRecord + "\n" + neo4jRecord;
   }
