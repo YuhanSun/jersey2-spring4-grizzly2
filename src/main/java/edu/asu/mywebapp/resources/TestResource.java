@@ -76,7 +76,7 @@ public class TestResource {
     System.out.println(input);
     String[] strings = input.split(delimiter);
     String query = strings[0];
-    query = query.split("limit ")[0];
+    query = removeAfter(query, "limit");
     LOGGER.info("query: " + query);
     String spatialNode = strings[1];
     LOGGER.info("spatialnode: " + spatialNode);
@@ -157,6 +157,15 @@ public class TestResource {
     List<String> refinedQueries =
         risoTreeConnector.getRefinedQueries(query, spatialNode, rectangle);
     return convertToFrontQuery(refinedQueries);
+  }
+
+  public static String removeAfter(String string, String removal) {
+    int pos = getPositionLowercase(string, removal);
+    return string.substring(0, pos);
+  }
+
+  public static int getPositionLowercase(String string, String find) {
+    return string.toLowerCase().indexOf(find);
   }
 
   /**
