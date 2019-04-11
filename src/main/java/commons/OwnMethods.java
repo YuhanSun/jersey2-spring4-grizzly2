@@ -1300,7 +1300,7 @@ public class OwnMethods {
       Util.println("PageCacheHits: " + arguments.get("PageCacheHits"));
       Util.println("PageCacheMisses: " + arguments.get("PageCacheMisses"));
 
-      dbhits += plan.dbHits();
+      dbhits += Integer.parseInt(arguments.get("DbHits").toString());
       for (ProfiledPlan planDescription2 : planDescription.children())
         queue.add(planDescription2);
     }
