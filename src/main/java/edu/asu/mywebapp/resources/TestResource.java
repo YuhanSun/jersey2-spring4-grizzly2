@@ -115,6 +115,7 @@ public class TestResource {
     LOGGER.info(profiledPlan.toString());
     session.close();
     resultCount = (int) profiledPlan.records();
+    LOGGER.info("" + resultCount);
     Map<String, Value> arguments = profiledPlan.arguments();
     LOGGER.info(arguments.toString());
     pageAccess = Integer.parseInt(arguments.get("PageCacheMisses").toString())
